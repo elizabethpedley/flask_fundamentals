@@ -24,4 +24,4 @@ def add():
     session['dont_add'] = True
     return redirect('/')
 
-app.run(debug=True)
+'app.run(debug=True)'
