@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect  
+from flask import Flask, render_template, request, redirect, flash, session 
 
 app = Flask(__name__)
+app.secret_key = 'ThisIsSecret'
 
 @app.route('/')
 def index(): 
@@ -8,6 +9,15 @@ def index():
 
 @app.route('/result', methods=['POST'])
 def result(): 
+    if len(request.form['name']) < 1:
+        flash("Name cannot be empty!")
+        return redirect('/')
+    elif len(request.form['comments']) < 1:
+        flash("Comments cannot be empty!")
+        return redirect('/')
+    elif len(request.form['comments']) > 120:
+        flash("Comments cannot be longer than 120 characters!")
+        return redirect('/')
     name = request.form['name']
     dojo = request.form['dojo_location']
     language = request.form['favorite_language']
